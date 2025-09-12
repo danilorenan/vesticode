@@ -1,49 +1,75 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { MessageSquare, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useMutation } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { insertContactSchema, type InsertContact } from '@shared/schema';
 
 export default function ContactSection() {
-  const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    instagram: '',
-    mensagem: ''
-  });
   const { toast } = useToast();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData); // todo: remove mock functionality
-    toast({
-      title: "Mensagem enviada!",
-      description: "Entraremos em contato em breve. Obrigado pelo interesse!"
-    });
-    // Reset form
-    setFormData({
+  // Initialize form with react-hook-form and Zod validation
+  const form = useForm<InsertContact>({
+    resolver: zodResolver(insertContactSchema),
+    defaultValues: {
       nome: '',
       email: '',
       instagram: '',
       mensagem: ''
-    });
+    }
+  });
+
+  const contactMutation = useMutation({
+    mutationFn: async (data: InsertContact) => {
+      const response = await apiRequest('POST', '/api/contact', data);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erro ao enviar mensagem');
+      }
+      return response.json();
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "Mensagem enviada!",
+        description: data.message || "Entraremos em contato em breve. Obrigado pelo interesse!"
+      });
+      // Reset form
+      form.reset();
+    },
+    onError: (error: any) => {
+      console.error('Contact form error:', error);
+      toast({
+        title: "Erro ao enviar mensagem",
+        description: error.message || "Ocorreu um erro. Tente novamente mais tarde.",
+        variant: "destructive"
+      });
+    }
+  });
+
+  const handleSubmit = (data: InsertContact) => {
+    contactMutation.mutate(data);
   };
 
   const handleWhatsAppClick = () => {
-    console.log('WhatsApp clicked'); // todo: remove mock functionality
-    const message = "Olá! Tenho interesse nos serviços da Vesti Code.";
-    const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
+    const message = `Olá Danilo! Tenho interesse nos serviços da Vesti Code. 
+
+Vi o site e gostaria de saber mais sobre:
+- Como vocês podem ajudar minha marca de moda
+- Qual o melhor pacote para o meu caso
+- Disponibilidade para uma conversa
+
+Aguardo seu retorno!`;
+    
+    // Replace this with your actual WhatsApp number (format: country code + number without + or spaces)
+    // Example: For +55 11 99999-9999, use: 5511999999999
+    const phoneNumber = "5511999999999"; // TODO: Replace with actual phone number
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -69,71 +95,94 @@ export default function ContactSection() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="nome" className="text-foreground">Nome *</Label>
-                  <Input
-                    id="nome"
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
                     name="nome"
-                    type="text"
-                    value={formData.nome}
-                    onChange={handleInputChange}
-                    placeholder="Seu nome completo"
-                    required
-                    data-testid="input-nome"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Nome *</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Seu nome completo"
+                            data-testid="input-nome"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-foreground">E-mail *</Label>
-                  <Input
-                    id="email"
+                  <FormField
+                    control={form.control}
                     name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="seu@email.com"
-                    required
-                    data-testid="input-email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">E-mail *</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="email"
+                            placeholder="seu@email.com"
+                            data-testid="input-email"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="instagram" className="text-foreground">Instagram da Marca</Label>
-                  <Input
-                    id="instagram"
+                  <FormField
+                    control={form.control}
                     name="instagram"
-                    type="text"
-                    value={formData.instagram}
-                    onChange={handleInputChange}
-                    placeholder="@suamarca"
-                    data-testid="input-instagram"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Instagram da Marca</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            value={field.value || ''}
+                            placeholder="@suamarca"
+                            data-testid="input-instagram"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="mensagem" className="text-foreground">Mensagem *</Label>
-                  <Textarea
-                    id="mensagem"
+                  <FormField
+                    control={form.control}
                     name="mensagem"
-                    value={formData.mensagem}
-                    onChange={handleInputChange}
-                    placeholder="Conte-me sobre seu projeto e desafios..."
-                    rows={4}
-                    required
-                    data-testid="input-mensagem"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Mensagem *</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            placeholder="Conte-me sobre seu projeto e desafios..."
+                            rows={4}
+                            data-testid="input-mensagem"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
 
-                <Button 
-                  type="submit"
-                  className="w-full bg-accent text-accent-foreground border-accent-border hover-elevate"
-                  data-testid="button-submit"
-                >
-                  Enviar Mensagem
-                  <Send className="ml-2 w-4 h-4" />
-                </Button>
-              </form>
+                  <Button 
+                    type="submit"
+                    disabled={contactMutation.isPending}
+                    className="w-full bg-accent text-accent-foreground border-accent-border hover-elevate"
+                    data-testid="button-submit"
+                  >
+                    {contactMutation.isPending ? 'Enviando...' : 'Enviar Mensagem'}
+                    <Send className="ml-2 w-4 h-4" />
+                  </Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
 
