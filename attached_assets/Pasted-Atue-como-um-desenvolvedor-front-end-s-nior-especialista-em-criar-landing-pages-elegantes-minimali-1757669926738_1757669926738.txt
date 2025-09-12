@@ -1,0 +1,84 @@
+Atue como um desenvolvedor front-end sênior, especialista em criar landing pages elegantes, minimalistas e de alta conversão. Seu cliente é uma agência boutique chamada "Vesti Code", que cria e-commerces para marcas de moda.
+
+Sua tarefa é gerar o código completo (HTML, CSS e JavaScript básico) para uma landing page de uma única página. O resultado final deve ser premium, espaçoso, totalmente responsivo e seguir rigorosamente a identidade visual e a estrutura fornecidas abaixo.
+
+1. ESTRUTURA DOS ARQUIVOS:
+
+index.html (Estrutura do conteúdo)
+style.css (Estilização completa)
+script.js (Para funcionalidades como menu mobile e scroll suave)
+2. IDENTIDADE VISUAL E ESTILO GLOBAL:
+
+Paleta de Cores:
+Texto Principal (Quase Preto): #1E1E1E
+Fundo Principal (Cinza Claro): #F5F5F5
+Cor de Destaque (Nude Sofisticado): #D3C5BC
+Branco Puro: #FFFFFF
+Fontes (use Google Fonts):
+Títulos e Headlines (elegante, com serifa): 'Playfair Display'
+Corpo de Texto e Subtítulos (moderno, sem serifa): 'Poppins'
+Estilo Geral: O design deve ser minimalista, com bastante espaço em branco (padding e margin generosos). Os botões devem ter cantos levemente arredondados. As animações devem ser sutis (ex: fade-in suave ao rolar a página).
+3. ESTRUTURA DA PÁGINA (index.html):
+
+a. Cabeçalho (<header>):
+
+Um cabeçalho fixo no topo.
+À esquerda, o logo da "Vesti Code" (use um placeholder de texto por enquanto).
+À direita, um menu de navegação com os links: "Soluções", "Portfólio", "Sobre", e um botão de destaque "Contato".
+O menu deve ser responsivo (transformar-se em um menu "hambúrguer" em telas menores).
+b. Seção Hero (<section id="hero">):
+
+Deve ocupar 100% da altura da tela (height: 100vh).
+Conteúdo centralizado vertical e horizontalmente.
+Título (H1) com a fonte Playfair Display, grande e impactante: "Lojas Online que Transformam Seguidores em Clentes."
+Subtítulo (p) com a fonte Poppins: "Criamos a experiência de compra online que sua marca de moda merece, unindo design sofisticado e tecnologia que vende."
+Botão de Ação (CTA): Texto "Agende sua Análise Gratuita". Estilo: fundo branco, texto preto, borda preta. No hover, o fundo deve mudar para a cor de destaque (#D3C5BC).
+c. Seção Problema (<section id="problema">):
+
+Fundo branco (#FFFFFF) para criar contraste.
+Título (H2): "Vender pelas redes sociais está limitando seu crescimento?"
+Abaixo, uma grade (grid) com 3 colunas, cada uma com um ícone simples e um pequeno texto descrevendo uma "dor":
+Coluna 1: "Pedidos desorganizados no Direct"
+Coluna 2: "Aparência amadora que não passa confiança"
+Coluna 3: "Processo de pagamento manual e demorado"
+d. Seção Soluções (<section id="solucoes">):
+
+Título (H2): "A Solução Completa para sua Marca."
+Layout de 3 cards lado a lado. Cada card representa um pacote, com fundo branco e uma sombra sutil.
+Card 1 - "Presença Digital Essencial": Título do pacote, pequena descrição.
+Card 2 - "E-commerce de Lançamento": Título do pacote, pequena descrição. Dê um destaque a este card, talvez com uma borda na cor de destaque.
+Card 3 - "E-commerce de Crescimento": Título do pacote, pequena descrição.
+e. Seção Portfólio (<section id="portfolio">):
+
+Título (H2): "Design que Vende, Tecnologia que Converte."
+Layout de duas colunas:
+Coluna Esquerda: Um placeholder grande para a imagem de um site (pode ser um retângulo cinza).
+Coluna Direita:
+Título do Projeto (H3): "Nome da Marca Fictícia"
+Descrição (p): "Desenvolvemos uma loja online completa, focada na experiência do usuário e otimizada para conversão, refletindo a identidade sofisticada da marca."
+Link/Botão: "Ver Projeto"
+f. Seção Sobre (<section id="sobre">):
+
+Fundo branco (#FFFFFF).
+Layout de duas colunas:
+Coluna Esquerda: Um placeholder para uma imagem circular (foto profissional do Danilo).
+Coluna Direita:
+Título (H2): "Expertise Real por Trás da Vesti Code"
+Texto (p): "Meu nome é Danilo Rezende, fundador da Vesti Code. Com mais de 3 anos de experiência direta no desenvolvimento e gestão de um e-commerce de moda de sucesso, eu não apenas construo sites: eu entendo os desafios do seu negócio."
+g. Seção Contato (<section id="contato">):
+
+Título (H2): "Vamos tirar sua ideia do papel?"
+Subtítulo (p): "Preencha o formulário abaixo ou chame diretamente no WhatsApp. Estou pronto para entender seu desafio."
+Um formulário de contato simples com os campos: Nome, E-mail, Instagram da Marca, Mensagem.
+Botão de Envio: "Enviar Mensagem", estilizado como o botão principal da seção Hero.
+h. Rodapé (<footer>):
+
+Minimalista, com fundo na cor principal de texto (#1E1E1E) e texto em branco.
+Texto: "© 2024 Vesti Code. Todos os direitos reservados."
+Ícones simples para redes sociais (Instagram, LinkedIn).
+4. FUNCIONALIDADES JAVASCRIPT (script.js):
+
+Scroll suave quando o usuário clica nos links do menu de navegação.
+Funcionalidade para abrir e fechar o menu hambúrguer em dispositivos móveis.
+(Opcional) Adicionar uma classe "visible" a cada seção quando ela entra na tela (viewport) para ativar animações de fade-in no CSS.
+Por favor, gere o código completo e bem-estruturado, com comentários onde for necessário para explicar a lógica.
