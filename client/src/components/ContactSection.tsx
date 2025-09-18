@@ -75,7 +75,7 @@ Aguardo seu retorno!`;
 
     // Replace this with your actual WhatsApp number (format: country code + number without + or spaces)
     // Example: For +55 11 99999-9999, use: 5511999999999
-    const phoneNumber = "5511999999999"; // TODO: Replace with actual phone number
+    const phoneNumber = "5547996045902"; // TODO: Replace with actual phone number
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
