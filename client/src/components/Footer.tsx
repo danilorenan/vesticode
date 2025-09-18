@@ -1,4 +1,5 @@
 import { Instagram, Linkedin } from 'lucide-react';
+import logo from '@assets/generated_images/Vesti (1080 x 800 px).png';
 
 export default function Footer() {
   const handleSocialClick = (platform: string) => {
@@ -11,9 +12,9 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo and Copyright */}
           <div className="text-center md:text-left">
-            <h3 className="text-2xl font-serif font-bold mb-2" data-testid="footer-logo">
-              Vesti Code
-            </h3>
+             <a href="/" className="inline-flex items-center" aria-label="Vesti Code - Início" data-testid="logo"> 
+              <img src={logo} alt="Vesti Code" className="h-12 w-auto md:h-14 lg:h-16 select-none" draggable="false" /> 
+             </a> 
             <p className="text-primary-foreground/80" data-testid="footer-copyright">
               © 2024 Vesti Code. Todos os direitos reservados.
             </p>

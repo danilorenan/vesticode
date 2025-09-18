@@ -20,8 +20,8 @@ export default function PortfolioSection() {
           {/* Project Image */}
           <div className="relative">
             <div className="aspect-[4/3] rounded-lg overflow-hidden bg-background shadow-xl">
-              <img 
-                src={portfolioImage} 
+              <img
+                src={portfolioImage}
                 alt="Projeto de e-commerce para marca de moda"
                 className="w-full h-full object-cover"
                 data-testid="portfolio-image"
@@ -32,12 +32,12 @@ export default function PortfolioSection() {
           {/* Project Details */}
           <div className="space-y-6">
             <h3 className="text-2xl font-serif font-bold text-card-foreground" data-testid="portfolio-project-title">
-              Elegance Fashion Studio
+              Thayná Kan Fashion Clothes
             </h3>
-            
+
             <p className="text-lg text-muted-foreground leading-relaxed" data-testid="portfolio-project-description">
-              Desenvolvemos uma loja online completa, focada na experiência do usuário e otimizada para conversão, 
-              refletindo a identidade sofisticada da marca. O resultado foi um aumento de 300% nas vendas online 
+              Desenvolvemos uma loja online completa, focada na experiência do usuário e otimizada para conversão,
+              refletindo a identidade sofisticada da marca. O resultado foi um aumento de 300% nas vendas online
               nos primeiros 3 meses.
             </p>
 
@@ -59,14 +59,16 @@ export default function PortfolioSection() {
               </ul>
             </div>
 
-            <Button 
-              onClick={handleViewProject}
-              variant="outline"
-              className="bg-accent text-accent-foreground border-accent-border hover-elevate"
-              data-testid="portfolio-view-project"
-            >
-              Ver Projeto Completo
-              <ExternalLink className="ml-2 w-4 h-4" />
+            <Button asChild variant="outline" className="bg-accent text-accent-foreground border-accent-border hover-elevate">
+
+              <a href="https://www.thaynakan.com.br/"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="portfolio-view-project"
+              >
+                Ver Projeto Completo
+                <ExternalLink className="ml-2 w-4 h-4" />
+              </a> 
             </Button>
           </div>
         </div>

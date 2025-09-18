@@ -6,7 +6,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { MessageSquare, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';
-import { apiRequest } from '@/lib/queryClient';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { insertContactSchema, type InsertContact } from '@shared/schema';
@@ -27,26 +26,34 @@ export default function ContactSection() {
 
   const contactMutation = useMutation({
     mutationFn: async (data: InsertContact) => {
-      const response = await apiRequest('POST', '/api/contact', data);
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erro ao enviar mensagem');
+      const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || "https://formspree.io/f/mnnbkwrv";
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          nome: data.nome,
+          email: data.email,
+          instagram: data.instagram,
+          mensagem: data.mensagem
+        })
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.message || `Erro ${res.status}`);
       }
-      return response.json();
+      return res.json();
     },
     onSuccess: (data) => {
       toast({
         title: "Mensagem enviada!",
-        description: data.message || "Entraremos em contato em breve. Obrigado pelo interesse!"
+        description: "Entraremos em contato em breve. Obrigado pelo interesse!"
       });
-      // Reset form
       form.reset();
     },
     onError: (error: any) => {
-      console.error('Contact form error:', error);
       toast({
         title: "Erro ao enviar mensagem",
-        description: error.message || "Ocorreu um erro. Tente novamente mais tarde.",
+        description: error?.message || "Ocorreu um erro. Tente novamente mais tarde.",
         variant: "destructive"
       });
     }
@@ -65,7 +72,7 @@ Vi o site e gostaria de saber mais sobre:
 - Disponibilidade para uma conversa
 
 Aguardo seu retorno!`;
-    
+
     // Replace this with your actual WhatsApp number (format: country code + number without + or spaces)
     // Example: For +55 11 99999-9999, use: 5511999999999
     const phoneNumber = "5511999999999"; // TODO: Replace with actual phone number
@@ -85,7 +92,7 @@ Aguardo seu retorno!`;
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 items-stretch">
           {/* Contact Form */}
           <Card className="bg-background border-card-border">
             <CardHeader>
@@ -172,7 +179,7 @@ Aguardo seu retorno!`;
                     )}
                   />
 
-                  <Button 
+                  <Button
                     type="submit"
                     disabled={contactMutation.isPending}
                     className="w-full bg-accent text-accent-foreground border-accent-border hover-elevate"
@@ -187,14 +194,15 @@ Aguardo seu retorno!`;
           </Card>
 
           {/* WhatsApp Contact */}
-          <Card className="bg-background border-card-border">
+          <Card className="bg-background border-card-border flex flex-col h-full">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-foreground">
                 <MessageSquare className="w-5 h-5" />
                 Ou Chame no WhatsApp
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            {/* Grid: auto | auto | 1fr | auto */}
+            <CardContent className="flex-1 grid grid-rows-[auto_auto_1fr_auto] gap-6">
               <p className="text-muted-foreground leading-relaxed">
                 Prefere uma conversa mais direta? Chame no WhatsApp para uma consultoria rápida e personalizada.
               </p>
@@ -214,22 +222,25 @@ Aguardo seu retorno!`;
                 </div>
               </div>
 
-              <Button 
-                onClick={handleWhatsAppClick}
-                variant="outline"
-                className="w-full border-accent-border hover:bg-accent hover:text-accent-foreground hover:border-accent-border"
-                data-testid="button-whatsapp"
-              >
-                <MessageSquare className="mr-2 w-4 h-4" />
-                Chamar no WhatsApp
-              </Button>
-
+              {/* Esta linha vira o “elástico” que empurra o botão para baixo */}
               <p className="text-sm text-muted-foreground text-center">
                 Disponível de segunda a sexta, das 9h às 18h
               </p>
+
+              {/* Botão no rodapé + respiro acima */}
+              <div className="pt-3">
+                <Button
+                  onClick={handleWhatsAppClick}
+                  variant="outline"
+                  className="w-full border-accent-border hover:bg-accent hover:text-accent-foreground hover:border-accent-border"
+                  data-testid="button-whatsapp"
+                >
+                  <MessageSquare className="mr-2 w-4 h-4" />
+                  Chamar no WhatsApp
+                </Button>
+              </div>
             </CardContent>
-          </Card>
-        </div>
+          </Card> </div>
       </div>
     </section>
   );

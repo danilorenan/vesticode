@@ -1,4 +1,4 @@
-import founderImage from '@assets/generated_images/Founder_professional_headshot_895f9d62.png';
+import founderImage from '@assets/generated_images/Founder_professional_headshot_895f9d62.jpg';
 
 export default function AboutSection() {
   return (
@@ -25,8 +25,8 @@ export default function AboutSection() {
             
             <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
               <p data-testid="about-intro">
-                Meu nome é <span className="text-foreground font-semibold">Danilo Rezende</span>, fundador da Vesti Code. 
-                Com mais de 3 anos de experiência direta no desenvolvimento e gestão de um e-commerce de moda de sucesso, 
+                Meu nome é <span className="text-foreground font-semibold">Danilo Renan</span>, fundador da Vesti Code. 
+                Com mais de 8 anos de experiência direta no desenvolvimento e gestão de um e-commerce de moda de sucesso, 
                 eu não apenas construo sites: <span className="text-foreground font-semibold">eu entendo os desafios do seu negócio</span>.
               </p>
               
@@ -47,7 +47,7 @@ export default function AboutSection() {
               <p className="text-foreground font-medium italic" data-testid="about-quote">
                 "Não é sobre criar mais um site. É sobre construir uma máquina de vendas que trabalha 24h por dia para sua marca."
               </p>
-              <p className="text-muted-foreground text-sm mt-2">- Danilo Rezende, Fundador</p>
+              <p className="text-muted-foreground text-sm mt-2">- Danilo Renan, Fundador</p>
             </div>
           </div>
         </div>

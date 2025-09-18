@@ -326,3 +326,25 @@
     inset: -1px;
   }
 }
+
+@layer components {
+.badge-featured {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+padding: 0.25rem 0.625rem;
+font-size: 0.75rem;
+font-weight: 600;
+line-height: 1;
+border-radius: 9999px;
+background: hsl(var(--accent));
+color: hsl(var(--accent-foreground));
+border: 1px solid hsl(var(--accent-border));
+box-shadow: var(--shadow-2xs);
+white-space: nowrap;
+pointer-events: none;
+}
+}
+@media (min-width: 768px) {
+.card-top-spacer { height: 24px; }
+}
